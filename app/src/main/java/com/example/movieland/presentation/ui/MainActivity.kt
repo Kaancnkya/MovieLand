@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.movieland.presentation.movies.view.MovieScreen
 import com.example.movieland.presentation.ui.theme.MovieLandTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,12 +30,12 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = "" ){
-                        composable(route = "" ){
-
+                    NavHost(navController = navController, startDestination = Screen.MovieScreen.route ){
+                        composable(route = Screen.MovieScreen.route ){
+                            MovieScreen(navController = navController)
                         }
 
-                        composable(route = "" ){
+                        composable(route = Screen.MovieDetailScreen.route ){
 
                         }
                     }
