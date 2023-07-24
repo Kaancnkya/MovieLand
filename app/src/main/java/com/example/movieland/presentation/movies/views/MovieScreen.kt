@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.example.movieland.presentation.movies.view
+package com.example.movieland.presentation.movies.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -25,12 +24,9 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.movieland.presentation.movies.MoviesEvent
 import com.example.movieland.presentation.movies.MoviesViewModel
 import com.example.movieland.presentation.ui.Screen
@@ -61,7 +57,7 @@ fun MovieScreen(
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(state.movies) { movie ->
                     MovieListRow(movie = movie, onItemClick = {
-                        //navController.navigate(Screen.MovieDetailScreen.route)
+                        navController.navigate(Screen.MovieDetailScreen.route+"/${movie.imdbID}")
                     })
                 }
             }
@@ -73,40 +69,39 @@ fun MovieScreen(
 
 @Composable
 fun MovieSearchBar(
-    modifier: Modifier,
-    hint: String,
+    modifier : Modifier,
+    hint: String = "",
     onSearch: (String) -> Unit = {}
 ) {
-
     var text by remember {
         mutableStateOf("")
     }
-
     var isHintDisplayed by remember {
         mutableStateOf(hint != "")
     }
 
     Box(modifier = modifier) {
-
-        TextField(value = text,
-            onValueChange = {
-                text = it
-            },
+        TextField(
+            value = text,
             keyboardActions = KeyboardActions(onDone = {
                 onSearch(text)
             }),
+            onValueChange = {
+                text =it
+            },
             maxLines = 1,
             singleLine = true,
             textStyle = TextStyle(color = Color.Black),
             shape = RoundedCornerShape(12.dp),
-            colors = TextFieldDefaults.textFieldColors(Color.White),
+            colors = TextFieldDefaults.textFieldColors(containerColor = Color.White)
+            ,
             modifier = Modifier
                 .fillMaxWidth()
                 .shadow(5.dp, CircleShape)
                 .background(Color.White, CircleShape)
                 .padding(horizontal = 20.dp)
                 .onFocusChanged {
-                    isHintDisplayed = it.isFocused != true && text.isNotEmpty()
+                    isHintDisplayed = it.isFocused != true && text.isEmpty()
                 }
         )
         if (isHintDisplayed) {

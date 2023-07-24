@@ -1,4 +1,6 @@
-package com.example.movieland.presentation.movies.view
+@file:OptIn(ExperimentalCoilApi::class)
+
+package com.example.movieland.presentation.movies.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -20,6 +22,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.movieland.domain.model.Movie
 

@@ -10,12 +10,12 @@ import retrofit2.HttpException
 import java.io.IOError
 import javax.inject.Inject
 
-class GetMovieDeatilsUseCase@Inject constructor(private val repository : MovieRepository) {
+class GetMovieDetailsUseCase@Inject constructor(private val repository : MovieRepository) {
 
     fun executeGetMovieDetails(imdbId: String) : Flow<Resource<MovieDetail>> = flow {
         try {
             emit(Resource.Loading())
-            val movieDetail = repository.getMovieDetail(imdbId).toMovieDetail()
+            val movieDetail = repository.getMovieDetail(imdb = imdbId).toMovieDetail()
             emit(Resource.Success(movieDetail))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "Error!"))
